@@ -14,7 +14,7 @@ class BinarySearch:
             return self.binarySearch(value, array, middle + 1, end)
 
         if array[middle] > value:
-            return self.binarySearch(value, array, start, middle)
+            return self.binarySearch(value, array, start, middle - 1)
 
         return middle
 
