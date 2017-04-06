@@ -29,6 +29,8 @@ class Heap:
             self.siftUp(parent)
 
     def getMax(self):
+        if self.size <= 0:
+            return
         return self.array[0]
 
     def getSize(self):
@@ -38,9 +40,12 @@ class Heap:
         return self.size == 0
 
     def extractMax(self):
+        if self.size <= 0:
+            return
+
         max = self.getMax()
         self.swap(0, self.size - 1)
-        self.size -= 1
+        self.size = self.size - 1
         self.siftDown(0)
         return max
 
@@ -48,20 +53,16 @@ class Heap:
         # +1 and +2 because array starts from 0
         leftIndex = index * 2 + 1
         rightIndex = leftIndex + 1
-        print "leftIndex", leftIndex
-        print "rightIndex", rightIndex
+        smallerThanRight = False
+        smallerThanLeft = False
 
-        try:
-            biggerThanLeft = self.array[index] > self.array[leftIndex]
-        except IndexError:
-            biggerThanLeft = False
+        if leftIndex < self.size:
+            smallerThanLeft = self.array[index] < self.array[leftIndex]
 
-        try:
-            biggerThanRight = self.array[index] > self.array[rightIndex]
-        except IndexError:
-            biggerThanRight = False
+        if rightIndex < self.size:
+            smallerThanRight = self.array[index] < self.array[rightIndex]
 
-        if biggerThanLeft & biggerThanRight:
+        if smallerThanLeft & smallerThanRight:
             if self.array[leftIndex] > self.array[rightIndex]:
                 self.swap(leftIndex, index)
                 self.siftDown(leftIndex)
@@ -71,12 +72,12 @@ class Heap:
             self.siftDown(rightIndex)
             return
 
-        if biggerThanRight:
+        if smallerThanRight:
             self.swap(index, rightIndex)
             self.siftDown(leftIndex)
             return
 
-        if biggerThanLeft:
+        if smallerThanLeft:
             self.swap(index, leftIndex)
             self.siftDown(leftIndex)
             return
@@ -86,3 +87,18 @@ class Heap:
         tmp = self.array[indexA]
         self.array[indexA] = self.array[indexB]
         self.array[indexB] = tmp
+
+    def heapify(self, array):
+        self.array = array
+        self.size = len(array)
+
+        for i in range((self.size - 1) / 2, -1, -1):
+            self.siftDown(i)
+
+    def sort(self, array):
+        self.heapify(array)
+
+        for i in range(0, self.size - 1):
+            self.extractMax()
+
+        return self.array
