@@ -47,5 +47,36 @@ class HeapTest(unittest.TestCase):
         self.assertEqual(self.heap.extractMax(), 1)
         self.assertNotEqual(self.heap.getMax(), 1)
 
+    def testExtractMaxMultiple(self):
+        self.heap.insert(1)
+        self.heap.insert(6)
+        self.heap.insert(2)
+        self.heap.insert(8)
+
+        self.assertEqual(self.heap.extractMax(), 8)
+        self.assertNotEqual(self.heap.getMax(), 8)
+        self.assertEqual(self.heap.array[self.heap.size], 8)
+
+        self.assertEqual(self.heap.extractMax(), 6)
+        self.assertNotEqual(self.heap.getMax(), 6)
+        self.assertEqual(self.heap.array[self.heap.size - 1], 6)
+
+    # def testRemove(self):
+    #     self.heap.insert(5)
+    #     self.heap.remove(0)
+    #     self.assertEqual(self.heap.array, )
+
+    def testHeapify(self):
+        self.heap.heapify([2, 5])
+        self.assertEqual(self.heap.array, [5, 2])
+
+        self.heap.heapify([2, 5, 6, 1, 4])
+        self.assertEqual(self.heap.array, [6, 5, 2, 1, 4])
+
+    # def testHeapSort(self):
+    #     sortedArray = self.heap.sort([5, 1, 3, 6, 8, 4])
+    #     self.assertEqual(sortedArray, [1, 3, 4, 5, 6, 8])
+
+
 if __name__ == '__main__':
     unittest.main()
