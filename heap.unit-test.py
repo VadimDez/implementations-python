@@ -19,7 +19,7 @@ class HeapTest(unittest.TestCase):
         self.assertEqual([2, 1], self.heap.array)
 
         self.heap.insert(3)
-        self.assertEqual([3, 2, 1], self.heap.array)
+        self.assertEqual([3, 1, 2], self.heap.array)
 
     def testGetMax(self):
         self.heap.insert(1)

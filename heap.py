@@ -12,7 +12,13 @@ class Heap:
 
     # sift up item at index
     def siftUp(self, index):
-        parent = index / 2
+        # -1 because array index starts from 0
+        tmpIndex = index - 1
+
+        if tmpIndex < 0:
+            tmpIndex = 0
+
+        parent = tmpIndex / 2
 
         if parent < 0 & parent > self.size:
             return
@@ -33,15 +39,27 @@ class Heap:
 
     def extractMax(self):
         max = self.getMax()
-        self.array[0] = self.array[self.size - 1]
+        self.swap(0, self.size - 1)
         self.size -= 1
+        self.siftDown(0)
         return max
 
     def siftDown(self, index):
-        leftIndex = (index + 1) * 2
+        # +1 and +2 because array starts from 0
+        leftIndex = index * 2 + 1
         rightIndex = leftIndex + 1
-        biggerThanLeft = self.array[index] > self.array[leftIndex]
-        biggerThanRight = self.array[index] > self.array[rightIndex]
+        print "leftIndex", leftIndex
+        print "rightIndex", rightIndex
+
+        try:
+            biggerThanLeft = self.array[index] > self.array[leftIndex]
+        except IndexError:
+            biggerThanLeft = False
+
+        try:
+            biggerThanRight = self.array[index] > self.array[rightIndex]
+        except IndexError:
+            biggerThanRight = False
 
         if biggerThanLeft & biggerThanRight:
             if self.array[leftIndex] > self.array[rightIndex]:
