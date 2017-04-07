@@ -102,3 +102,16 @@ class Heap:
             self.extractMax()
 
         return self.array
+
+    # remove item from heap by index
+    def remove(self, index):
+
+        if index == 0 & self.size == 1:
+            self.array = []
+            self.size = 0
+            return
+
+        self.array[index] = self.array[self.size - 1]
+        del self.array[self.size - 1]
+        self.size -= 1
+        self.siftDown(index)
